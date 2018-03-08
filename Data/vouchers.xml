@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<tourist-vouchers
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xmlns="http://www.example.com/vouchers"
+        xsi:noNamespaceSchemaLocation="vouchers.xsd">
+    <journey transport="air">
+        <id>x1</id>
+        <country>USA</country>
+        <days-number>10</days-number>
+        <cost>9000</cost>
+        <hotel name="Grand Hotel" rate="5">
+            <meal>AL</meal>
+            <apartment-type>LUXE</apartment-type>
+            <apartment-size>3</apartment-size>
+            <email>grand.hotel@hotel.com</email>
+        </hotel>
+    </journey>
+
+    <journey transport="air">
+        <id>x2</id>
+        <country>CANADA</country>
+        <days-number>7</days-number>
+        <cost>900</cost>
+        <hotel rate="2" name="Simple Hotel">
+            <meal>AL</meal>
+            <apartment-type>LUXE</apartment-type>
+            <apartment-size>3</apartment-size>
+            <email>simple.hotel@hotel.com</email>
+        </hotel>
+    </journey>
+
+    <excursion transport="bus">
+        <id>x3</id>
+        <country>Poland</country>
+        <days-number>5</days-number>
+        <cost>300</cost>
+        <excursion-language>rus</excursion-language>
+    </excursion>
+
+</tourist-vouchers>
