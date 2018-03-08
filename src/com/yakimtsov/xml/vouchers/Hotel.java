@@ -17,40 +17,7 @@ import javax.xml.bind.annotation.XmlSchemaType;
 import javax.xml.bind.annotation.XmlType;
 
 
-/**
- * <p>Java class for Hotel complex type.
- * 
- * <p>The following schema fragment specifies the expected         content contained within this class.
- * 
- * <pre>
- * &lt;complexType name="Hotel"&gt;
- *   &lt;complexContent&gt;
- *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType"&gt;
- *       &lt;sequence&gt;
- *         &lt;element name="meal" type="{http://www.example.com/vouchers}Meal"/&gt;
- *         &lt;element name="apartment-type" type="{http://www.example.com/vouchers}Apartment-Type"/&gt;
- *         &lt;element name="apartment-size" type="{http://www.w3.org/2001/XMLSchema}positiveInteger"/&gt;
- *         &lt;element name="email" type="{http://www.example.com/vouchers}Email"/&gt;
- *       &lt;/sequence&gt;
- *       &lt;attribute name="name" use="required" type="{http://www.w3.org/2001/XMLSchema}string" /&gt;
- *       &lt;attribute name="rate" default="1"&gt;
- *         &lt;simpleType&gt;
- *           &lt;restriction base="{http://www.w3.org/2001/XMLSchema}positiveInteger"&gt;
- *             &lt;enumeration value="1"/&gt;
- *             &lt;enumeration value="2"/&gt;
- *             &lt;enumeration value="3"/&gt;
- *             &lt;enumeration value="4"/&gt;
- *             &lt;enumeration value="5"/&gt;
- *           &lt;/restriction&gt;
- *         &lt;/simpleType&gt;
- *       &lt;/attribute&gt;
- *     &lt;/restriction&gt;
- *   &lt;/complexContent&gt;
- * &lt;/complexType&gt;
- * </pre>
- * 
- * 
- */
+
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "Hotel", propOrder = {
     "meal",
@@ -76,134 +43,46 @@ public class Hotel {
     @XmlAttribute(name = "rate")
     protected Integer rate;
 
-    /**
-     * Gets the value of the meal property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link Meal }
-     *     
-     */
     public Meal getMeal() {
         return meal;
     }
 
-    /**
-     * Sets the value of the meal property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link Meal }
-     *     
-     */
     public void setMeal(Meal value) {
         this.meal = value;
     }
 
-    /**
-     * Gets the value of the apartmentType property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link ApartmentType }
-     *     
-     */
     public ApartmentType getApartmentType() {
         return apartmentType;
     }
 
-    /**
-     * Sets the value of the apartmentType property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link ApartmentType }
-     *     
-     */
     public void setApartmentType(ApartmentType value) {
         this.apartmentType = value;
     }
 
-    /**
-     * Gets the value of the apartmentSize property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link BigInteger }
-     *     
-     */
     public Integer getApartmentSize() {
         return apartmentSize;
     }
 
-    /**
-     * Sets the value of the apartmentSize property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link BigInteger }
-     *     
-     */
     public void setApartmentSize(Integer value) {
         this.apartmentSize = value;
     }
 
-    /**
-     * Gets the value of the email property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
-     */
     public String getEmail() {
         return email;
     }
 
-    /**
-     * Sets the value of the email property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
-     */
     public void setEmail(String value) {
         this.email = value;
     }
 
-    /**
-     * Gets the value of the name property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
-     */
     public String getName() {
         return name;
     }
 
-    /**
-     * Sets the value of the name property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
-     */
     public void setName(String value) {
         this.name = value;
     }
 
-    /**
-     * Gets the value of the rate property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link BigInteger }
-     *     
-     */
     public Integer getRate() {
         if (rate == null) {
             return 1;
@@ -212,14 +91,6 @@ public class Hotel {
         }
     }
 
-    /**
-     * Sets the value of the rate property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link BigInteger }
-     *     
-     */
     public void setRate(Integer value) {
         this.rate = value;
     }

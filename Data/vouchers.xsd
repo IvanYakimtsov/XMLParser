@@ -85,7 +85,7 @@
     <complexType name="Voucher">
         <sequence>
             <element name="id" type="ID"/>
-            <element name="country"/>
+            <element name="country" type="string"/>
             <element name="days-number" type="positiveInteger"/>
             <element name="cost" type="positiveInteger"/>
         </sequence>

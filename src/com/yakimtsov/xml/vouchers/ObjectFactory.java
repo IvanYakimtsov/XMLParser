@@ -35,81 +35,41 @@ public class ObjectFactory {
     private final static QName _Journey_QNAME = new QName("http://www.example.com/vouchers", "journey");
     private final static QName _Excursion_QNAME = new QName("http://www.example.com/vouchers", "excursion");
 
-    /**
-     * Create a new ObjectFactory that can be used to create new instances of schema derived classes for package: com.example.vouchers
-     * 
-     */
     public ObjectFactory() {
     }
 
-    /**
-     * Create an instance of {@link TouristVouchers }
-     * 
-     */
-    public TouristVouchers createTouristVouchers() {
-        return new TouristVouchers();
+    public TouristVoucherList createTouristVouchers() {
+        return new TouristVoucherList();
     }
 
 
-
-    /**
-     * Create an instance of {@link Journey }
-     * 
-     */
     public Journey createJourney() {
         return new Journey();
     }
 
-    /**
-     * Create an instance of {@link Excursion }
-     * 
-     */
+
     public Excursion createExcursion() {
         return new Excursion();
     }
 
-    /**
-     * Create an instance of {@link Hotel }
-     * 
-     */
+
     public Hotel createHotel() {
         return new Hotel();
     }
 
-    /**
-     * Create an instance of {@link JAXBElement }{@code <}{@link Voucher }{@code >}
-     * 
-     * @param value
-     *     Java instance representing xml element's value.
-     * @return
-     *     the new instance of {@link JAXBElement }{@code <}{@link Voucher }{@code >}
-     */
+
     @XmlElementDecl(namespace = "http://www.example.com/vouchers", name = "voucher")
     public JAXBElement<Voucher> createVoucher(Voucher value) {
         return new JAXBElement<Voucher>(_Voucher_QNAME, Voucher.class, null, value);
     }
 
-    /**
-     * Create an instance of {@link JAXBElement }{@code <}{@link Journey }{@code >}
-     * 
-     * @param value
-     *     Java instance representing xml element's value.
-     * @return
-     *     the new instance of {@link JAXBElement }{@code <}{@link Journey }{@code >}
-     */
+
     @XmlElementDecl(namespace = "http://www.example.com/vouchers", name = "journey", substitutionHeadNamespace = "http://www.example.com/vouchers", substitutionHeadName = "voucher")
     public JAXBElement<Journey> createJourney(Journey value) {
         return new JAXBElement<Journey>(_Journey_QNAME, Journey.class, null, value);
     }
 
-    /**
-     * Create an instance of {@link JAXBElement }{@code <}{@link Excursion }{@code >}
-     * 
-     * @param value
-     *     Java instance representing xml element's value.
-     * @return
-     *     the new instance of {@link JAXBElement }{@code <}{@link Excursion }{@code >}
-     */
+
     @XmlElementDecl(namespace = "http://www.example.com/vouchers", name = "excursion", substitutionHeadNamespace = "http://www.example.com/vouchers", substitutionHeadName = "voucher")
     public JAXBElement<Excursion> createExcursion(Excursion value) {
         return new JAXBElement<Excursion>(_Excursion_QNAME, Excursion.class, null, value);

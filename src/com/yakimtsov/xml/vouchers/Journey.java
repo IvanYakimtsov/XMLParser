@@ -13,50 +13,20 @@ import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlType;
 
-
-/**
- * <p>Java class for Journey complex type.
- * <p>
- * <p>The following schema fragment specifies the expected         content contained within this class.
- * <p>
- * <pre>
- * &lt;complexType name="Journey"&gt;
- *   &lt;complexContent&gt;
- *     &lt;extension base="{http://www.example.com/vouchers}Voucher"&gt;
- *       &lt;sequence&gt;
- *         &lt;element name="hotel" type="{http://www.example.com/vouchers}Hotel"/&gt;
- *       &lt;/sequence&gt;
- *     &lt;/extension&gt;
- *   &lt;/complexContent&gt;
- * &lt;/complexType&gt;
- * </pre>
- */
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "Journey", propOrder = {
         "hotel"
 })
-public class Journey
-        extends Voucher {
+public class Journey extends Voucher {
 
     @XmlElement(required = true)
-    protected Hotel hotel;
+    private Hotel hotel;
 
-    /**
-     * Gets the value of the hotel property.
-     *
-     * @return possible object is
-     * {@link Hotel }
-     */
+
     public Hotel getHotel() {
         return hotel;
     }
 
-    /**
-     * Sets the value of the hotel property.
-     *
-     * @param value allowed object is
-     *              {@link Hotel }
-     */
     public void setHotel(Hotel value) {
         this.hotel = value;
     }

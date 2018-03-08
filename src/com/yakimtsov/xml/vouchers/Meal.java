@@ -11,23 +11,6 @@ package com.yakimtsov.xml.vouchers;
 import javax.xml.bind.annotation.XmlEnum;
 import javax.xml.bind.annotation.XmlType;
 
-
-/**
- * <p>Java class for Meal.
- * 
- * <p>The following schema fragment specifies the expected         content contained within this class.
- * <p>
- * <pre>
- * &lt;simpleType name="Meal"&gt;
- *   &lt;restriction base="{http://www.w3.org/2001/XMLSchema}string"&gt;
- *     &lt;enumeration value="HB"/&gt;
- *     &lt;enumeration value="BB"/&gt;
- *     &lt;enumeration value="AL"/&gt;
- *   &lt;/restriction&gt;
- * &lt;/simpleType&gt;
- * </pre>
- * 
- */
 @XmlType(name = "Meal")
 @XmlEnum
 public enum Meal {

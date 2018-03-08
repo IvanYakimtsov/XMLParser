@@ -42,35 +42,11 @@ import javax.xml.bind.annotation.XmlType;
     "voucher"
 })
 @XmlRootElement(name = "tourist-vouchers")
-public class TouristVouchers {
+public class TouristVoucherList {
 
     @XmlElementRef(name = "voucher", namespace = "http://www.example.com/vouchers", type = JAXBElement.class)
     protected List<JAXBElement<? extends Voucher>> voucher;
 
-    /**
-     * Gets the value of the voucher property.
-     * 
-     * <p>
-     * This accessor method returns a reference to the live list,
-     * not a snapshot. Therefore any modification you make to the
-     * returned list will be present inside the JAXB object.
-     * This is why there is not a <CODE>set</CODE> method for the voucher property.
-     * 
-     * <p>
-     * For example, to add a new item, do as follows:
-     * <pre>
-     *    getVoucher().add(newItem);
-     * </pre>
-     * 
-     * 
-     * <p>
-     * Objects of the following type(s) are allowed in the list
-     * {@link JAXBElement }{@code <}{@link Excursion }{@code >}
-     * {@link JAXBElement }{@code <}{@link Journey }{@code >}
-     * {@link JAXBElement }{@code <}{@link Voucher }{@code >}
-     * 
-     * 
-     */
     public List<JAXBElement<? extends Voucher>> getVoucher() {
         if (voucher == null) {
             voucher = new ArrayList<JAXBElement<? extends Voucher>>();
