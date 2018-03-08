@@ -29,14 +29,15 @@ public class Main {
             e.printStackTrace();
         }
 
+        System.out.println("DOM -----------------------------");
         VouchersDomParser parser = new VouchersDomParser();
-
         try {
             parser.parse(sourceFile);
         } catch (ParseException e) {
             e.printStackTrace();
         }
 
+        System.out.println("SAX -----------------------------");
         try {
             VouchersSaxParser saxParser = new VouchersSaxParser();
           //  System.out.println(sourceFile.getAbsolutePath());

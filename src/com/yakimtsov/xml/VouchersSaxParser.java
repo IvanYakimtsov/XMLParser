@@ -14,6 +14,7 @@ import org.xml.sax.helpers.DefaultHandler;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.List;
 
 public class VouchersSaxParser extends DefaultHandler {
     private SAXParser saxParser;
@@ -31,32 +32,37 @@ public class VouchersSaxParser extends DefaultHandler {
         }
     }
 
-    public void parse(File file) throws ParseException {
+    public ArrayList<Voucher> parse(File file) throws ParseException {
         try {
             saxParser.parse(file.getAbsolutePath(), this);
         } catch (SAXException | IOException e) {
             throw new ParseException(e);
         }
+
+        return vouchers;
     }
 
     @Override
     public void startDocument() throws SAXException {
-        System.out.println("start document");
+     //   System.out.println("start document");
     }
 
     @Override
     public void startElement(String uri, String localName, String qName, Attributes attributes) throws SAXException {
-        System.out.println("NEW ELEMENT");
-        System.out.println("name " + qName);
+    //    System.out.println("NEW ELEMENT");
+     //   System.out.println("name " + qName);
         currentTag = qName;
+      //  System.out.println("CURRENT TAG " + currentTag);
         switch (currentTag) {
             case "journey":
                 currentVoucher = new Journey();
                 currentVoucher.setTransport(attributes.getValue(0));
+                vouchers.add(currentVoucher);
                 break;
             case "excursion":
                 currentVoucher = new Excursion();
                 currentVoucher.setTransport(attributes.getValue(0));
+                vouchers.add(currentVoucher);
                 break;
 
             case "hotel":
@@ -79,6 +85,7 @@ public class VouchersSaxParser extends DefaultHandler {
     @Override
     public void characters(char[] ch, int start, int length) {
         //System.out.println("CH " + new String(ch, start, length));
+        //System.out.println("chacracters method");
         switch (currentTag) {
             case "id":
                 currentVoucher.setId(new String(ch, start, length));
@@ -103,15 +110,37 @@ public class VouchersSaxParser extends DefaultHandler {
                 break;
             case "email":
                 currentHotel.setEmail(new String(ch, start, length));
+                break;
+            case "excursion-language":
+                ((Excursion)currentVoucher).setExcursionLanguage(new String(ch, start, length));
+                break;
         }
     }
 
     @Override
-    public void endElement(String uri, String localName, String qName) {
+    public void endElement(String uri, String localName, String qName) throws SAXException {
        // System.out.println("END EL " + qName);
-        if ("journey".equals(qName) || "excursion".equals(qName)) {
-            vouchers.add(currentVoucher);
+        super.endElement(uri, localName, qName);
+        currentTag = "";
+        if("journey".equals(qName)){
+            System.out.println(currentVoucher.getId() + " " + currentVoucher.getCountry() + " " +
+                    currentVoucher.getTransport() + " " + currentVoucher.getDaysNumber() + " " + currentVoucher.getCost()
+                    + " " + ((Journey)currentVoucher).getHotel().getName() + " "
+                    + ((Journey)currentVoucher).getHotel().getRate() + " "
+                    + ((Journey)currentVoucher).getHotel().getMeal()
+                    +" " + ((Journey)currentVoucher).getHotel().getApartmentSize()
+                    + " " + ((Journey)currentVoucher).getHotel().getEmail() +
+                    " " + ((Journey)currentVoucher).getHotel().getApartmentType());
         }
+
+        if("excursion".equals(qName)){
+            System.out.println(currentVoucher.getId() + " " + currentVoucher.getCountry() + " " +
+                    currentVoucher.getTransport() + " " + currentVoucher.getDaysNumber() + " " + currentVoucher.getCost()
+                    + " " + ((Excursion)currentVoucher).getExcursionLanguage());
+        }
+//        if ("journey".equals(qName) || "excursion".equals(qName)) {
+//            vouchers.add(currentVoucher);
+//        }
     }
 
     @Override

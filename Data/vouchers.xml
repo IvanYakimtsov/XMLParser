@@ -15,7 +15,6 @@
             <email>grand.hotel@hotel.com</email>
         </hotel>
     </journey>
-
     <journey transport="air">
         <id>x2</id>
         <country>CANADA</country>
@@ -28,7 +27,6 @@
             <email>simple.hotel@hotel.com</email>
         </hotel>
     </journey>
-
     <excursion transport="bus">
         <id>x3</id>
         <country>Poland</country>
@@ -36,5 +34,4 @@
         <cost>300</cost>
         <excursion-language>rus</excursion-language>
     </excursion>
-
 </tourist-vouchers>
