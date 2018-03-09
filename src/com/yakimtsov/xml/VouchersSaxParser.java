@@ -1,20 +1,18 @@
 package com.yakimtsov.xml;
 
-import com.yakimtsov.xml.vouchers.*;
+import com.yakimtsov.xml.entity.*;
 import org.xml.sax.Attributes;
 import org.xml.sax.SAXException;
 
 import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.parsers.SAXParser;
 import javax.xml.parsers.SAXParserFactory;
-import javax.xml.validation.Schema;
 
 import org.xml.sax.helpers.DefaultHandler;
 
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.List;
 
 public class VouchersSaxParser extends DefaultHandler {
     private SAXParser saxParser;
@@ -33,6 +31,7 @@ public class VouchersSaxParser extends DefaultHandler {
     }
 
     public ArrayList<Voucher> parse(File file) throws ParseException {
+        vouchers = new ArrayList<>();
         try {
             saxParser.parse(file.getAbsolutePath(), this);
         } catch (SAXException | IOException e) {
@@ -139,7 +138,7 @@ public class VouchersSaxParser extends DefaultHandler {
                     + " " + ((Excursion)currentVoucher).getExcursionLanguage());
         }
 //        if ("journey".equals(qName) || "excursion".equals(qName)) {
-//            vouchers.add(currentVoucher);
+//            entity.add(currentVoucher);
 //        }
     }
 

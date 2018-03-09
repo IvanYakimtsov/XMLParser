@@ -1,6 +1,6 @@
 package com.yakimtsov.xml;
 
-import com.yakimtsov.xml.vouchers.*;
+import com.yakimtsov.xml.entity.*;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
@@ -13,12 +13,13 @@ import javax.xml.parsers.ParserConfigurationException;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.List;
 
 public class VouchersDomParser {
-//    private final int ID_NUMBER = 1;
-//    private final int ID_COUNTRY = 3;
-//    private final int DAYS_NUMBER = 7;
+    private final int ID_NUMBER = 1;
+    private final int COUNTRY_NUMBER = 3;
+    private final int DAYS_NUMBER = 5;
+    private final int COST_NUMBER = 7;
+    private final int HOTEL_NUMBER = 9;
 
     Document doc;
 
@@ -39,8 +40,6 @@ public class VouchersDomParser {
         }
         NodeList journeyList = doc.getElementsByTagName("journey");
         NodeList excursionList = doc.getElementsByTagName("excursion");
-        // System.out.println(rootElement.getNodeName());
-        // NodeList vouchers = rootElement.getChildNodes();
         for (int index = 0; index < journeyList.getLength(); index++) {
             vouchers.add(buildJourney(journeyList.item(index)));
         }
@@ -55,7 +54,7 @@ public class VouchersDomParser {
     private Excursion buildExcursion(Node node) {
         Excursion excursion = new Excursion();
         NodeList excursionNodes = node.getChildNodes();
-        fillVoucher(excursion,node);
+        buildVoucher(excursion,node);
         excursion.setExcursionLanguage(excursionNodes.item(9).getTextContent());
         System.out.println(excursion.getId() + " " + excursion.getCountry() + " " +
                 excursion.getTransport() + " " + excursion.getDaysNumber() + " " + excursion.getCost()
@@ -67,8 +66,8 @@ public class VouchersDomParser {
     private Journey buildJourney(Node node) {
         Journey journey = new Journey();
         NodeList journeyNodes = node.getChildNodes();
-        fillVoucher(journey,node);
-        journey.setHotel(buildHotel(journeyNodes.item(9)));
+        buildVoucher(journey,node);
+        journey.setHotel(buildHotel(journeyNodes.item(HOTEL_NUMBER)));
 
         System.out.println(journey.getId() + " " + journey.getCountry() + " " +
         journey.getTransport() + " " + journey.getDaysNumber() + " " + journey.getCost()
@@ -78,13 +77,13 @@ public class VouchersDomParser {
         return journey;
     }
 
-    private void fillVoucher(Voucher voucher, Node node){
+    private void buildVoucher(Voucher voucher, Node node){
         NodeList journeyNodes = node.getChildNodes();
         voucher.setTransport(((Element) node).getAttribute("transport"));
-        voucher.setId(journeyNodes.item(1).getTextContent());
-        voucher.setCountry(journeyNodes.item(3).getTextContent());
-        voucher.setDaysNumber(Integer.valueOf(journeyNodes.item(5).getTextContent()));
-        voucher.setCost(Integer.valueOf(journeyNodes.item(7).getTextContent()));
+        voucher.setId(journeyNodes.item(ID_NUMBER).getTextContent());
+        voucher.setCountry(journeyNodes.item(COUNTRY_NUMBER).getTextContent());
+        voucher.setDaysNumber(Integer.valueOf(journeyNodes.item(DAYS_NUMBER).getTextContent()));
+        voucher.setCost(Integer.valueOf(journeyNodes.item(COST_NUMBER).getTextContent()));
     }
 
     private Hotel buildHotel(Node hotelNode){

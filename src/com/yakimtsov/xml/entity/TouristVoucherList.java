@@ -6,7 +6,7 @@
 //
 
 
-package com.yakimtsov.xml.vouchers;
+package com.yakimtsov.xml.entity;
 
 import java.util.ArrayList;
 import java.util.List;

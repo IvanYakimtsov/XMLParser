@@ -6,7 +6,7 @@
 //
 
 
-package com.yakimtsov.xml.vouchers;
+package com.yakimtsov.xml.entity;
 
 import javax.xml.bind.JAXBElement;
 import javax.xml.bind.annotation.XmlElementDecl;
