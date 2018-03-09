@@ -1,8 +1,8 @@
-package com.yakimtsov.xml;
+package com.yakimtsov.xml.parser;
 
+import com.yakimtsov.xml.exeption.ParseException;
 import com.yakimtsov.xml.entity.*;
 
-import javax.xml.XMLConstants;
 import javax.xml.stream.XMLInputFactory;
 import javax.xml.stream.XMLStreamConstants;
 import javax.xml.stream.XMLStreamException;
@@ -20,9 +20,6 @@ public class VouchersStaxParser {
         inputFactory = XMLInputFactory.newInstance();
     }
 
-//    public ArrayList<Voucher> getVouchers() {
-//        return vouchers;
-//    }
 
     public ArrayList<Voucher> parse(File file) throws ParseException {
         ArrayList<Voucher> vouchers = new ArrayList<>();
@@ -37,12 +34,12 @@ public class VouchersStaxParser {
                 int type = reader.next();
                 if (type == XMLStreamConstants.START_ELEMENT) {
                     name = reader.getLocalName();
-                    // System.out.println("NAME " + name);
+
                     if ("journey".equals(name) || "excursion".equals(name)) {
                         Voucher voucher = buildVoucher(reader, name);
                         vouchers.add(voucher);
                     }
-                    //   System.out.println("TEXT " + reader.getText());
+
 
                 }
 
@@ -62,8 +59,7 @@ public class VouchersStaxParser {
         }
         String transport = reader.getAttributeValue(null, "transport");
         voucher.setTransport(transport);
-        // System.out.println("VOUCHER " + voucherType);
-        String name = "";
+        String name;
         while (reader.hasNext()) {
             int type = reader.next();
             if (type == XMLStreamConstants.START_ELEMENT) {
@@ -107,7 +103,7 @@ public class VouchersStaxParser {
         String hotelRate = reader.getAttributeValue(null, "rate");
         hotel.setName(hotelName);
         hotel.setRate(Integer.valueOf(hotelRate));
-        String name = "";
+        String name;
         while (reader.hasNext()) {
             int type = reader.next();
             if (type == XMLStreamConstants.START_ELEMENT) {

@@ -1,20 +1,25 @@
 package com.yakimtsov.xml;
 
+import com.yakimtsov.xml.entity.Excursion;
+import com.yakimtsov.xml.entity.Journey;
+import com.yakimtsov.xml.entity.TouristVoucherList;
+import com.yakimtsov.xml.entity.Voucher;
+import com.yakimtsov.xml.exeption.ParseException;
+import com.yakimtsov.xml.parser.VouchersDomParser;
+import com.yakimtsov.xml.parser.VouchersSaxParser;
+import com.yakimtsov.xml.parser.VouchersStaxParser;
+import org.xml.sax.SAXException;
+
 import javax.xml.XMLConstants;
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;
 import javax.xml.bind.Unmarshaller;
 import javax.xml.transform.Source;
 import javax.xml.transform.stream.StreamSource;
-import javax.xml.validation.*;
-
-import com.yakimtsov.xml.entity.Excursion;
-import com.yakimtsov.xml.entity.Journey;
-import com.yakimtsov.xml.entity.TouristVoucherList;
-import com.yakimtsov.xml.entity.Voucher;
-import org.xml.sax.SAXException;
-
-import java.io.File; // if you use File
+import javax.xml.validation.Schema;
+import javax.xml.validation.SchemaFactory;
+import javax.xml.validation.Validator;
+import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
@@ -42,7 +47,23 @@ public class Main {
         System.out.println("DOM -----------------------------");
         VouchersDomParser parser = new VouchersDomParser();
         try {
-            parser.parse(sourceFile);
+            ArrayList<Voucher> vouchers = parser.parse(sourceFile);
+            Journey journey = (Journey) vouchers.get(0);
+            System.out.println(journey.getId() + " " + journey.getCountry() + " " +
+                    journey.getTransport() + " " + journey.getDaysNumber() + " " + journey.getCost()
+                    + " " + journey.getHotel().getName() + " "+ journey.getHotel().getRate() + " " + journey.getHotel().getMeal()
+                    +" " + journey.getHotel().getApartmentSize() + " " + journey.getHotel().getEmail() +
+                    " " + journey.getHotel().getApartmentType());
+            journey = (Journey) vouchers.get(1);
+            System.out.println(journey.getId() + " " + journey.getCountry() + " " +
+                    journey.getTransport() + " " + journey.getDaysNumber() + " " + journey.getCost()
+                    + " " + journey.getHotel().getName() + " "+ journey.getHotel().getRate() + " " + journey.getHotel().getMeal()
+                    +" " + journey.getHotel().getApartmentSize() + " " + journey.getHotel().getEmail() +
+                    " " + journey.getHotel().getApartmentType());
+            Excursion excursion = (Excursion) vouchers.get(2);
+            System.out.println(excursion.getId() + " " + excursion.getCountry() + " " +
+                    excursion.getTransport() + " " + excursion.getDaysNumber() + " " + excursion.getCost()
+                    + " " + excursion.getExcursionLanguage());
         } catch (ParseException e) {
             e.printStackTrace();
         }
@@ -50,8 +71,23 @@ public class Main {
         System.out.println("SAX -----------------------------");
         try {
             VouchersSaxParser saxParser = new VouchersSaxParser();
-          //  System.out.println(sourceFile.getAbsolutePath());
-            saxParser.parse(sourceFile);
+            ArrayList<Voucher> vouchers = saxParser.parse(sourceFile);
+            Journey journey = (Journey) vouchers.get(0);
+            System.out.println(journey.getId() + " " + journey.getCountry() + " " +
+                    journey.getTransport() + " " + journey.getDaysNumber() + " " + journey.getCost()
+                    + " " + journey.getHotel().getName() + " "+ journey.getHotel().getRate() + " " + journey.getHotel().getMeal()
+                    +" " + journey.getHotel().getApartmentSize() + " " + journey.getHotel().getEmail() +
+                    " " + journey.getHotel().getApartmentType());
+            journey = (Journey) vouchers.get(1);
+            System.out.println(journey.getId() + " " + journey.getCountry() + " " +
+                    journey.getTransport() + " " + journey.getDaysNumber() + " " + journey.getCost()
+                    + " " + journey.getHotel().getName() + " "+ journey.getHotel().getRate() + " " + journey.getHotel().getMeal()
+                    +" " + journey.getHotel().getApartmentSize() + " " + journey.getHotel().getEmail() +
+                    " " + journey.getHotel().getApartmentType());
+            Excursion excursion = (Excursion) vouchers.get(2);
+            System.out.println(excursion.getId() + " " + excursion.getCountry() + " " +
+                    excursion.getTransport() + " " + excursion.getDaysNumber() + " " + excursion.getCost()
+                    + " " + excursion.getExcursionLanguage());
         } catch (Exception e) {
             e.printStackTrace();
         }

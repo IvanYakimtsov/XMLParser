@@ -14,25 +14,6 @@ import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlType;
 
 
-/**
- * <p>Java class for Excursion complex type.
- * 
- * <p>The following schema fragment specifies the expected         content contained within this class.
- * 
- * <pre>
- * &lt;complexType name="Excursion"&gt;
- *   &lt;complexContent&gt;
- *     &lt;extension base="{http://www.example.com/vouchers}Voucher"&gt;
- *       &lt;sequence&gt;
- *         &lt;element name="excursion-language" type="{http://www.w3.org/2001/XMLSchema}string"/&gt;
- *       &lt;/sequence&gt;
- *     &lt;/extension&gt;
- *   &lt;/complexContent&gt;
- * &lt;/complexType&gt;
- * </pre>
- * 
- * 
- */
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "Excursion", propOrder = {
     "excursionLanguage"
@@ -44,26 +25,10 @@ public class Excursion
     @XmlElement(name = "excursion-language", required = true)
     protected String excursionLanguage;
 
-    /**
-     * Gets the value of the excursionLanguage property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
-     */
     public String getExcursionLanguage() {
         return excursionLanguage;
     }
 
-    /**
-     * Sets the value of the excursionLanguage property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
-     */
     public void setExcursionLanguage(String value) {
         this.excursionLanguage = value;
     }

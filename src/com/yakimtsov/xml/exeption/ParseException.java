@@ -1,4 +1,4 @@
-package com.yakimtsov.xml;
+package com.yakimtsov.xml.exeption;
 
 /**
  * Created by Ivan on 21.01.2018.
