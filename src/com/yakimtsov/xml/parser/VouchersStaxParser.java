@@ -1,7 +1,7 @@
 package com.yakimtsov.xml.parser;
 
-import com.yakimtsov.xml.exeption.ParseException;
 import com.yakimtsov.xml.entity.*;
+import com.yakimtsov.xml.exeption.ParseException;
 
 import javax.xml.stream.XMLInputFactory;
 import javax.xml.stream.XMLStreamConstants;
@@ -12,7 +12,7 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
 
-public class VouchersStaxParser {
+public class VouchersStaxParser implements VouchersParser {
 
     private XMLInputFactory inputFactory;
 
@@ -21,11 +21,12 @@ public class VouchersStaxParser {
     }
 
 
+    @Override
     public ArrayList<Voucher> parse(File file) throws ParseException {
         ArrayList<Voucher> vouchers = new ArrayList<>();
-        FileInputStream inputStream = null;
-        XMLStreamReader reader = null;
-        String name;
+        FileInputStream inputStream;
+        XMLStreamReader reader;
+        String tagName;
 
         try {
             inputStream = new FileInputStream(file);
@@ -33,10 +34,11 @@ public class VouchersStaxParser {
             while (reader.hasNext()) {
                 int type = reader.next();
                 if (type == XMLStreamConstants.START_ELEMENT) {
-                    name = reader.getLocalName();
+                    tagName = reader.getLocalName();
 
-                    if ("journey".equals(name) || "excursion".equals(name)) {
-                        Voucher voucher = buildVoucher(reader, name);
+                    if (XMLElement.EXCURSION.toString().toLowerCase().equals(tagName)
+                            || XMLElement.JOURNEY.toString().toLowerCase().equals(tagName)) {
+                        Voucher voucher = buildVoucher(reader, tagName);
                         vouchers.add(voucher);
                     }
 
@@ -52,75 +54,94 @@ public class VouchersStaxParser {
 
     private Voucher buildVoucher(XMLStreamReader reader, String voucherType) throws XMLStreamException, ParseException {
         Voucher voucher;
-        if ("journey".equals(voucherType)) {
+        if (XMLElement.JOURNEY.toString().toLowerCase().equals(voucherType)) {
             voucher = new Journey();
         } else {
             voucher = new Excursion();
         }
-        String transport = reader.getAttributeValue(null, "transport");
+        String transport = reader.getAttributeValue(null,
+                XMLElement.TRANSPORT.toString().toLowerCase());
         voucher.setTransport(transport);
         String name;
         while (reader.hasNext()) {
             int type = reader.next();
             if (type == XMLStreamConstants.START_ELEMENT) {
-                name = reader.getLocalName();
-                switch (name) {
-                    case "id":
-                        voucher.setId(getXMLText(reader));
-                        break;
-                    case "country":
-                        voucher.setCountry(getXMLText(reader));
-                        break;
-                    case "days-number":
-                        voucher.setDaysNumber(Integer.valueOf(getXMLText(reader)));
-                        break;
-                    case "cost":
-                        voucher.setCost(Integer.valueOf(getXMLText(reader)));
-                        break;
-                    case "excursion-language":
-                        ((Excursion) voucher).setExcursionLanguage(getXMLText(reader));
-                        break;
-                    case "hotel":
-                        Hotel hotel = buildHotel(reader);
-                        ((Journey) voucher).setHotel(hotel);
-                        break;
+                name = reader.getLocalName().toUpperCase().replace('-', '_');
+                if (XMLElement.contains(name)) {
+                    XMLElement element = XMLElement.valueOf(name);
+                    switch (element) {
+                        case ID:
+                            voucher.setId(getXMLText(reader));
+                            break;
+                        case COUNTRY:
+                            voucher.setCountry(getXMLText(reader));
+                            break;
+                        case DAYS_NUMBER:
+                            voucher.setDaysNumber(Integer.valueOf(getXMLText(reader)));
+                            break;
+                        case COST:
+                            voucher.setCost(Integer.valueOf(getXMLText(reader)));
+                            break;
+                        case EXCURSION_LANGUAGE:
+                            if (voucher instanceof Excursion) {
+                                ((Excursion) voucher).setExcursionLanguage(getXMLText(reader));
+                            } else {
+                                throw new ParseException("invalid tag in " + voucherType + " tag");
+                            }
+
+                            break;
+                        case HOTEL:
+                            Hotel hotel = buildHotel(reader);
+                            if (voucher instanceof Journey) {
+                                ((Journey) voucher).setHotel(hotel);
+                            } else {
+                                throw new ParseException("invalid tag in " + voucherType + " tag");
+                            }
+
+                            break;
+                    }
                 }
+
             }
             if (type == XMLStreamConstants.END_ELEMENT) {
                 name = reader.getLocalName();
-                if ("journey".equals(name) || "excursion".equals(name)) {
+                if (XMLElement.JOURNEY.toString().toLowerCase().equals(name)
+                        || XMLElement.EXCURSION.toString().toLowerCase().equals(name)) {
                     return voucher;
                 }
             }
         }
 
-        throw new ParseException("Unknown element in " + voucherType + "tag");
+        throw new ParseException("Unknown element in " + voucherType + " tag");
     }
 
     private Hotel buildHotel(XMLStreamReader reader) throws XMLStreamException {
         Hotel hotel = new Hotel();
-        String hotelName = reader.getAttributeValue(null, "name");
-        String hotelRate = reader.getAttributeValue(null, "rate");
+        String hotelName = reader.getAttributeValue(null, XMLElement.NAME.toString().toLowerCase());
+        String hotelRate = reader.getAttributeValue(null, XMLElement.RATE.toString().toLowerCase());
         hotel.setName(hotelName);
         hotel.setRate(Integer.valueOf(hotelRate));
         String name;
         while (reader.hasNext()) {
             int type = reader.next();
             if (type == XMLStreamConstants.START_ELEMENT) {
-                name = reader.getLocalName();
-                switch (name) {
-                    case "meal":
-                        hotel.setMeal(Meal.fromValue(getXMLText(reader)));
-                        break;
-                    case "apartment-type":
-                        hotel.setApartmentType(ApartmentType.fromValue(getXMLText(reader)));
-                        break;
-                    case "apartment-size":
-                        hotel.setApartmentSize(Integer.valueOf(getXMLText(reader)));
-                        break;
-                    case "email":
-                        hotel.setEmail(getXMLText(reader));
-                        break;
+                name = reader.getLocalName().toUpperCase().replace('-', '_');
+                if (XMLElement.contains(name)) {
+                    XMLElement element = XMLElement.valueOf(name);
+                    switch (element) {
+                        case MEAL:
+                            hotel.setMeal(Meal.fromValue(getXMLText(reader)));
+                            break;
+                        case APARTMENT_TYPE:
+                            hotel.setApartmentType(ApartmentType.fromValue(getXMLText(reader)));
+                            break;
+                        case APARTMENT_SIZE:
+                            hotel.setApartmentSize(Integer.valueOf(getXMLText(reader)));
+                            break;
+                        case EMAIL:
+                            hotel.setEmail(getXMLText(reader));
+                            break;
+                    }
                 }
             }
             if (type == XMLStreamConstants.END_ELEMENT) {

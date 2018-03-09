@@ -13,10 +13,9 @@ import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 
-public class VouchersSaxParser extends DefaultHandler {
+public class VouchersSaxParser extends DefaultHandler implements VouchersParser{
     private SAXParser saxParser;
-    // private String currentTag;
-    private XMLElements currentTag;
+    private XMLElement currentTag;
     private ArrayList<Voucher> vouchers = new ArrayList<>();
     private Voucher currentVoucher;
     private Hotel currentHotel;
@@ -30,6 +29,7 @@ public class VouchersSaxParser extends DefaultHandler {
         }
     }
 
+    @Override
     public ArrayList<Voucher> parse(File file) throws ParseException {
         vouchers = new ArrayList<>();
         try {
@@ -44,10 +44,9 @@ public class VouchersSaxParser extends DefaultHandler {
 
     @Override
     public void startElement(String uri, String localName, String qName, Attributes attributes) throws SAXException {
-        //currentTag = qName;
         String tagName = qName.toUpperCase().replace('-', '_');
-        if (XMLElements.contains(tagName)) {
-            currentTag = XMLElements.valueOf(tagName);
+        if (XMLElement.contains(tagName)) {
+            currentTag = XMLElement.valueOf(tagName);
             switch (currentTag) {
                 case JOURNEY:
                     currentVoucher = new Journey();
@@ -65,7 +64,7 @@ public class VouchersSaxParser extends DefaultHandler {
                     ((Journey) currentVoucher).setHotel(currentHotel);
                     String firstAttr = attributes.getValue(0);
                     String secondAttr = attributes.getValue(1);
-                    String attrName = XMLElements.NAME.toString().toLowerCase();
+                    String attrName = XMLElement.NAME.toString().toLowerCase();
                     if (attrName.equals(attributes.getQName(0))) {
                         currentHotel.setName(firstAttr);
                         currentHotel.setRate(Integer.valueOf(secondAttr));

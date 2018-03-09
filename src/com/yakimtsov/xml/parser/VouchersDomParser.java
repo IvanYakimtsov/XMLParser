@@ -1,7 +1,7 @@
 package com.yakimtsov.xml.parser;
 
-import com.yakimtsov.xml.exeption.ParseException;
 import com.yakimtsov.xml.entity.*;
+import com.yakimtsov.xml.exeption.ParseException;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
@@ -15,7 +15,7 @@ import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 
-public class VouchersDomParser {
+public class VouchersDomParser implements VouchersParser{
     private final int ID_NUMBER = 1;
     private final int COUNTRY_NUMBER = 3;
     private final int DAYS_NUMBER = 5;
@@ -27,6 +27,7 @@ public class VouchersDomParser {
     private final int HOTEL_APARTMENT_SIZE_NUMBER = 5;
     private final int HOTEL_EMAIL_NUMBER = 7;
 
+    @Override
     public ArrayList<Voucher> parse(File file) throws ParseException {
         ArrayList<Voucher> vouchers = new ArrayList<>();
         DocumentBuilderFactory f = DocumentBuilderFactory.newInstance();
@@ -43,8 +44,8 @@ public class VouchersDomParser {
         } catch (SAXException | IOException e) {
             throw new ParseException(e);
         }
-        NodeList journeyList = doc.getElementsByTagName(XMLElements.JOURNEY.toString().toLowerCase());
-        NodeList excursionList = doc.getElementsByTagName(XMLElements.EXCURSION.toString().toLowerCase());
+        NodeList journeyList = doc.getElementsByTagName(XMLElement.JOURNEY.toString().toLowerCase());
+        NodeList excursionList = doc.getElementsByTagName(XMLElement.EXCURSION.toString().toLowerCase());
         for (int index = 0; index < journeyList.getLength(); index++) {
             vouchers.add(buildJourney(journeyList.item(index)));
         }
@@ -75,7 +76,7 @@ public class VouchersDomParser {
 
     private void buildVoucher(Voucher voucher, Node node) {
         NodeList journeyNodes = node.getChildNodes();
-        voucher.setTransport(((Element) node).getAttribute(XMLElements.TRANSPORT.toString().toLowerCase()));
+        voucher.setTransport(((Element) node).getAttribute(XMLElement.TRANSPORT.toString().toLowerCase()));
         voucher.setId(journeyNodes.item(ID_NUMBER).getTextContent());
         voucher.setCountry(journeyNodes.item(COUNTRY_NUMBER).getTextContent());
         voucher.setDaysNumber(Integer.valueOf(journeyNodes.item(DAYS_NUMBER).getTextContent()));
@@ -85,9 +86,9 @@ public class VouchersDomParser {
     private Hotel buildHotel(Node hotelNode) {
         Hotel hotel = new Hotel();
         NodeList hotelNodes = hotelNode.getChildNodes();
-        hotel.setName(((Element) hotelNode).getAttribute(XMLElements.NAME.toString().toLowerCase()));
+        hotel.setName(((Element) hotelNode).getAttribute(XMLElement.NAME.toString().toLowerCase()));
         hotel.setRate(Integer.valueOf(((Element) hotelNode)
-                .getAttribute(XMLElements.RATE.toString().toLowerCase())));
+                .getAttribute(XMLElement.RATE.toString().toLowerCase())));
         hotel.setMeal(Meal.fromValue(hotelNodes.item(HOTEL_MEAL_NUMBER).getTextContent()));
         hotel.setApartmentType(ApartmentType.fromValue(hotelNodes.item(HOTEL_APARTMENT_TYPE_NUMBER).getTextContent()));
         hotel.setApartmentSize(Integer.valueOf(hotelNodes.item(HOTEL_APARTMENT_SIZE_NUMBER).getTextContent()));
